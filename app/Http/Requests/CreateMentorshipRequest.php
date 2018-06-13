@@ -24,9 +24,9 @@ class CreateMentorshipRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required',
+            'days' => 'required|integer', //TODO: write a custom validation rule for this.
             'description' => 'required',
-            'days' => 'required|integer',
+            'for' => 'required|in:mentor,mentee',
             'mentorship_duration' => 'required|integer',
             'session_duration' => 'required|integer',
             'pairing_time' => 'required|date_format:H:i'

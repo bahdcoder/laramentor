@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMentorshipRequestsTable extends Migration
+class CreateInterestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateMentorshipRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentorship_requests', function (Blueprint $table) {
+        Schema::create('interests', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('mentorship_request_id');
             $table->integer('user_id');
-            $table->string('for');
-            $table->text('description');
-            $table->timeTz('pairing_time');
-            $table->integer('days');
-            $table->integer('session_duration');
-            $table->integer('mentorship_duration');
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreateMentorshipRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mentorship_requests');
+        Schema::dropIfExists('interests');
     }
 }

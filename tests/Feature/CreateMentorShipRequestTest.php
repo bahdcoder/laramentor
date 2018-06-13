@@ -17,13 +17,13 @@ class CreateMentorShipRequestTest extends TestCase
      */
     public function testAUserCanCreateAMentorshipRequest()
     {
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = factory(\App\User::class)->create();
 
         $this->actingAs($user);
 
         $response = $this->post('requests', [
-            'type' => 'mentor',
+            'for' => 'mentor',
             'description' => 'lorem ipsum',
             'mentorship_duration' => 50, // number of days
             'pairing_time' => '23:00',
@@ -47,7 +47,7 @@ class CreateMentorShipRequestTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'type', 'description', 'days', 'mentorship_duration', 'session_duration'
+            'for', 'description', 'days', 'mentorship_duration', 'session_duration'
         ]);
     }
 }

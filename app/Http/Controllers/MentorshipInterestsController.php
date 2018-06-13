@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\MentorshipRequest;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateMentorshipRequest;
 
-class MentorshipRequestsController extends Controller
+class MentorshipInterestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,14 +30,14 @@ class MentorshipRequestsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\MentorshipRequest  $mentorshipRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateMentorshipRequest $request)
+    public function store(MentorshipRequest $mentorshipRequest)
     {
-         return auth()->user()->mentorshipRequests()->create($request->only([
-            'for', 'description', 'mentorship_duration', 'days', 'pairing_time', 'session_duration'
-        ]));
+        return $mentorshipRequest->interests()->create([
+            'user_id' => auth()->id()
+        ]);
     }
 
     /**

@@ -19,11 +19,11 @@ class CreateMentorShipRequestTest extends TestCase
         $validationRules = (new CreateMentorshipRequest())->rules();
 
         $this->assertEquals($validationRules, [
-            'type' => 'required',
             'description' => 'required',
             'days' => 'required|integer',
-            'mentorship_duration' => 'required|integer',
+            'for' => 'required|in:mentor,mentee',
             'session_duration' => 'required|integer',
+            'mentorship_duration' => 'required|integer',
             'pairing_time' => 'required|date_format:H:i'
         ]);
     }
