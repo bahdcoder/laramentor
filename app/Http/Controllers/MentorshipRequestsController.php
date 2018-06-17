@@ -25,7 +25,7 @@ class MentorshipRequestsController extends Controller
      */
     public function create()
     {
-        //
+        // return view('requests.create');
     }
 
     /**

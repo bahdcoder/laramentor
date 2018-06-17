@@ -25,6 +25,7 @@ class CreateMentorshipRequest extends FormRequest
     {
         return [
             'days' => 'required|integer', //TODO: write a custom validation rule for this.
+            //TODO: it should contain the number representing the day of the week. example, 2,3,4 means tuesday, wednesday, and thursday
             'description' => 'required',
             'for' => 'required|in:mentor,mentee',
             'mentorship_duration' => 'required|integer',
