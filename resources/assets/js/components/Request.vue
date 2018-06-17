@@ -72,10 +72,16 @@
                     <br>
                     <v-time-picker v-model="pairing_time" :config="pairing_time_options"></v-time-picker>
                 </div>
+
+                <div class="form-group">
+                    <div class="alert alert-info" v-if="this.duration && this.pairing_time && this.days">
+                        {{ summaryMessage }}
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Request {{ type }}</button>
+                <button type="button" :disabled="!isValidRequest" class="btn btn-primary">Request {{ type }}</button>
             </div>
             </div>
         </div>
@@ -91,13 +97,23 @@ import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css'
 import EventBus from '../event-bus'
 import { SET_REQUEST_TYPE } from '../events'
 
+const weekDays = {
+    1: 'Mondays',
+    2: 'Tuesdays',
+    3: 'Wednesdays',
+    4: 'Thursdays',
+    5: 'Fridays',
+    6: 'Saturdays',
+    7: 'Sundays'
+}
+
 export default {
     data() {
         return {
             type: '',
             selectedSkills: null,
             description: '',
-            duration: '1',
+            duration: null,
             days: [],
             description: '',
             pairing_time: new Date,
@@ -120,11 +136,32 @@ export default {
     },
     computed: {
         skillsList() {
-            // 
-            return JSON.parse(this.skills).map(skill => skill.name)
+            return JSON.parse(this.skills).map(skill => {
+                skill['label'] = skill.name
+                skill['value'] = skill.id
+
+                return skill
+            })
         },
         isValidRequest() {
+            const descriptionIsValid = () => this.description && this.description.length > 10
+            const typeIsValid = () => (this.type === 'Mentor' || this.type === 'Mentee')
+            const durationIsValid = () => (this.duration && typeof Number(this.duration) === 'number' && Number(this.duration) < 12)
+            const daysIsValid = () => (this.days.length > 0)
+            const skillsIsValid = () => (this.selectedSkills.length > 0)
 
+            return descriptionIsValid() && typeIsValid() && durationIsValid() && daysIsValid() && skillsIsValid()
+        },
+        summaryMessage() {
+            const occurence = this.days.sort().map(day => weekDays[day])
+
+            let occurenceString = ''
+
+            occurence.forEach(day => occurenceString += `, ${day}`)
+
+            const message = `This mentorship will last for ${this.duration} weeks. Mentorship sessions will hold on ${occurenceString} at ${this.pairing_time}.`
+
+            return message
         }
     }
 }

@@ -63792,6 +63792,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -63800,6 +63806,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+var weekDays = {
+    1: 'Mondays',
+    2: 'Tuesdays',
+    3: 'Wednesdays',
+    4: 'Thursdays',
+    5: 'Fridays',
+    6: 'Saturdays',
+    7: 'Sundays'
+};
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -63809,7 +63825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             type: '',
             selectedSkills: null,
             description: '',
-            duration: '1',
+            duration: null,
             days: []
         }, _defineProperty(_ref, 'description', ''), _defineProperty(_ref, 'pairing_time', new Date()), _defineProperty(_ref, 'pairing_time_options', {
             format: 'LT',
@@ -63833,12 +63849,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     computed: {
         skillsList: function skillsList() {
-            // 
             return JSON.parse(this.skills).map(function (skill) {
-                return skill.name;
+                skill['label'] = skill.name;
+                skill['value'] = skill.id;
+
+                return skill;
             });
         },
-        isValidRequest: function isValidRequest() {}
+        isValidRequest: function isValidRequest() {
+            var _this2 = this;
+
+            var descriptionIsValid = function descriptionIsValid() {
+                return _this2.description && _this2.description.length > 10;
+            };
+            var typeIsValid = function typeIsValid() {
+                return _this2.type === 'Mentor' || _this2.type === 'Mentee';
+            };
+            var durationIsValid = function durationIsValid() {
+                return _this2.duration && typeof Number(_this2.duration) === 'number' && Number(_this2.duration) < 12;
+            };
+            var daysIsValid = function daysIsValid() {
+                return _this2.days.length > 0;
+            };
+            var skillsIsValid = function skillsIsValid() {
+                return _this2.selectedSkills.length > 0;
+            };
+
+            return descriptionIsValid() && typeIsValid() && durationIsValid() && daysIsValid() && skillsIsValid();
+        },
+        summaryMessage: function summaryMessage() {
+            var occurence = this.days.sort().map(function (day) {
+                return weekDays[day];
+            });
+
+            var occurenceString = '';
+
+            occurence.forEach(function (day) {
+                return occurenceString += ', ' + day;
+            });
+
+            var message = 'This mentorship will last for ' + this.duration + ' weeks. Mentorship sessions will hold on ' + occurenceString + ' at ' + this.pairing_time + '.';
+
+            return message;
+        }
     }
 });
 
@@ -68315,7 +68368,19 @@ var render = function() {
                   })
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                this.duration && this.pairing_time && this.days
+                  ? _c("div", { staticClass: "alert alert-info" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.summaryMessage) +
+                          "\n                "
+                      )
+                    ])
+                  : _vm._e()
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [
@@ -68330,7 +68395,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "button",
-                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button", disabled: !_vm.isValidRequest }
+                },
                 [_vm._v("Request " + _vm._s(_vm.type))]
               )
             ])
@@ -68474,7 +68542,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "dropdown-menu",
+        staticClass: "dropdown-menu request-dropdown-menu",
         attrs: { "aria-labelledby": "dropdownMenuButton" }
       },
       [

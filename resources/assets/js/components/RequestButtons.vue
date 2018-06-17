@@ -3,7 +3,7 @@
     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Request for
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <div class="dropdown-menu request-dropdown-menu" aria-labelledby="dropdownMenuButton">
       <button class="dropdown-item" @click="setRequestType('Mentor')">MENTOR</button>
       <button class="dropdown-item" @click="setRequestType('Mentee')">MENTEE</button>
     </div>
