@@ -7,20 +7,25 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
+        "test": "jest",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@vue/test-utils": "^1.0.0-beta.19",
         "axios": "^0.18",
+        "babel-jest": "^23.0.1",
         "babel-plugin-transform-runtime": "^6.23.0",
         "babel-preset-es2015": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
+        "jest": "^23.1.0",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "popper.js": "^1.12",
-        "vue": "^2.5.7"
+        "vue": "^2.5.7",
+        "vue-jest": "^2.6.0"
     },
     "dependencies": {
         "vue-bootstrap-datetimepicker": "^5.0.0-beta.2",

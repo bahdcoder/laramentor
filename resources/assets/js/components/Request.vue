@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="alert alert-info" v-if="this.duration && this.pairing_time && this.days">
+                    <div class="alert alert-info" v-if="this.duration && this.pairing_time && this.days.length > 0">
                         {{ summaryMessage }}
                     </div>
                 </div>
