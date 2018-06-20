@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::prefix('auth')->group(function() {
+    Auth::routes();
+});
 
 Route::resource('requests', 'MentorshipRequestsController');
 Route::resource('requests/{mentorship_request}/interests', 'MentorshipInterestsController');

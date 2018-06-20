@@ -35,9 +35,9 @@ class MentorshipInterestsController extends Controller
      */
     public function store(MentorshipRequest $mentorshipRequest)
     {
-        return $mentorshipRequest->interests()->create([
-            'user_id' => auth()->id()
-        ]);
+        auth()->user()->showInterest($mentorshipRequest);
+
+        return $mentorshipRequest->load('interests', 'skills', 'user');
     }
 
     /**

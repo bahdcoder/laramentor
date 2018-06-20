@@ -36,9 +36,15 @@ class MentorshipRequestsController extends Controller
      */
     public function store(CreateMentorshipRequest $request)
     {
-         return auth()->user()->mentorshipRequests()->create($request->only([
+        $mentorshipRequest = auth()->user()->mentorshipRequests()->create($request->only([
             'for', 'description', 'mentorship_duration', 'days', 'pairing_time', 'session_duration'
         ]));
+
+        session()->flash('success', 'Mentorship request created successfully.');
+
+        $mentorshipRequest->skills()->attach($request->skills);
+        
+        return $mentorshipRequest;
     }
 
     /**

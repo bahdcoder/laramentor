@@ -16,5 +16,25 @@ class SkillsTableSeeder extends Seeder
             'name' => 'laravel',
             'color' => '#000'
         ]);
+
+        Skill::create([
+            'name' => 'vuejs',
+            'color' => '#000'
+        ]);
+
+        Skill::create([
+            'name' => 'reactjs',
+            'color' => '#000'
+        ]);
+
+        Skill::create([
+            'name' => 'eloquent',
+            'color' => '#000'
+        ]);
+
+        Skill::create([
+            'name' => 'laravel-cashier',
+            'color' => '#000'
+        ]);
     }
 }

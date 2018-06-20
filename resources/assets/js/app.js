@@ -15,16 +15,20 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('vue-request', require('./components/Request.vue'));
+Vue.component('vue-request', require('./components/Request.vue'))
+Vue.component('vue-request-pool', require('./components/RequestPool.vue'))
 Vue.component('vue-request-buttons', require('./components/RequestButtons.vue'))
+Vue.component('vue-single-request', require('./components/SingleRequestModal.vue'))
 
 jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
   icons: {
     up: 'fas fa-arrow-up',
     down: 'fas fa-arrow-down',
   }
-});
+})
+
+Vue.use(require('vuejs-noty').default)
 
 const app = new Vue({
     el: '#app'
-});
+})

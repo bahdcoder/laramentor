@@ -29,7 +29,7 @@ class ShowMentorshipInterestTest extends TestCase
 
         $response = $this->post("requests/{$mentorshipRequest->id}/interests");
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
 
         $interest = $mentorshipRequest->interests->first();
 

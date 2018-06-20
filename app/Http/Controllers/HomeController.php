@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MentorshipRequest;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home')
+            ->withMentorshipRequests(MentorshipRequest::pending()->with('skills', 'interests', 'user')->get());
     }
 }

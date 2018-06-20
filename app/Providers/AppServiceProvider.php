@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use View;
+use Cache;
 use App\Skill;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('skills', Skill::all());
+        View::composer('*', function ($view) {
+            $view->with('skills', Cache::remember('skills', 1440, function () {
+                return Skill::all();
+            }));
+        });
     }
 
     /**

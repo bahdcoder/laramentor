@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="skills">Select the skills you want to {{ type === 'Mentor' ? 'acquire' : 'share' }}</label>
-                    <v-select multiple v-model="selectedSkills" :options="skillsList"></v-select>
+                    <v-select multiple v-model="selectedSkills" label="name" :options="skills"></v-select>
                 </div>
                 <div class="form-group">
                     <label for="description">Give a clear description of your expectations</label>
@@ -68,20 +68,33 @@
                     
                 </div>
                 <div class="form-group">
-                    <label for="pairing_time">Pairing Time</label>
+                    <label for="pairing_time">Session Pairing Time</label>
                     <br>
                     <v-time-picker v-model="pairing_time" :config="pairing_time_options"></v-time-picker>
                 </div>
 
                 <div class="form-group">
-                    <div class="alert alert-info" v-if="this.duration && this.pairing_time && this.days.length > 0">
+                    <label for="session_duration">Session Pairing duration</label>
+                    <br>
+                    <select v-model="session_duration" name="session_duration" id="session_duration" class="form-control">
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="90">1hour 30 minutes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="alert alert-info" v-if="this.duration && this.pairingTimeIsValid() && this.days.length > 0">
                         {{ summaryMessage }}
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" :disabled="!isValidRequest" class="btn btn-primary">Request {{ type }}</button>
+                <button type="button" :disabled="loading" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" @click="requestMentor()" :disabled="!isValidRequest" class="btn btn-primary">
+                    <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+                    <span v-else>Request {{ type }}</span>
+                </button>
             </div>
             </div>
         </div>
@@ -111,16 +124,18 @@ export default {
     data() {
         return {
             type: '',
-            selectedSkills: null,
+            selectedSkills: [],
             description: '',
             duration: null,
             days: [],
             description: '',
             pairing_time: new Date,
             pairing_time_options: {
-                format: 'LT',
+                format: 'HH:mm',
                 useCurrent: false,
-            }
+            },
+            session_duration: 30,
+            loading: false
         }
     },
     components: {
@@ -135,14 +150,6 @@ export default {
         })
     },
     computed: {
-        skillsList() {
-            return JSON.parse(this.skills).map(skill => {
-                skill['label'] = skill.name
-                skill['value'] = skill.id
-
-                return skill
-            })
-        },
         isValidRequest() {
             const descriptionIsValid = () => this.description && this.description.length > 10
             const typeIsValid = () => (this.type === 'Mentor' || this.type === 'Mentee')
@@ -150,18 +157,45 @@ export default {
             const daysIsValid = () => (this.days.length > 0)
             const skillsIsValid = () => (this.selectedSkills.length > 0)
 
-            return descriptionIsValid() && typeIsValid() && durationIsValid() && daysIsValid() && skillsIsValid()
+            return descriptionIsValid() && typeIsValid() && durationIsValid() && daysIsValid() && skillsIsValid() && this.pairingTimeIsValid()
         },
         summaryMessage() {
             const occurence = this.days.sort().map(day => weekDays[day])
 
             let occurenceString = ''
 
-            occurence.forEach(day => occurenceString += `, ${day}`)
+            occurence.forEach((day, index) => {
+                if (index === 0) {
+                    occurenceString += day
+                } else if (index > 0 && index < (occurence.length - 1)) {
+                    occurenceString += `, ${day}`
+                } else {
+                    occurenceString += ` and ${day}.`
+                }
+            })
 
             const message = `This mentorship will last for ${this.duration} weeks. Mentorship sessions will hold on ${occurenceString} at ${this.pairing_time}.`
 
             return message
+        }
+    },
+    methods: {
+        pairingTimeIsValid() {
+            return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(this.pairing_time)
+        },
+        requestMentor() {
+            this.loading = true
+            axios.post('/requests', {
+                for: this.type.toLowerCase(),
+                description: this.description,
+                mentorship_duration: this.duration * 7, // database stores mentorship duration as number of days.
+                pairing_time: this.pairing_time,
+                skills: this.skills.map(skill => skill.id),
+                session_duration: this.session_duration,
+                days: this.days.join('')
+            }).then(response => {
+                window.location.pathname = '/home'
+            })
         }
     }
 }
