@@ -9,7 +9,7 @@ test('it sets the type to component data when the SET_REQUEST_TYPE event is trig
 
   const requestForm = mount(Request, {
     propsData: {
-      skills: JSON.stringify(skills)
+      skills
     }
   })
   

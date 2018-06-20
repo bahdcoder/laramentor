@@ -1,0 +1,10 @@
+parameters:
+    git_dir: .
+    bin_dir: vendor/bin
+    tasks:
+      phpunit:
+      npm_script:
+        script: test
+        triggered_by: [js, vue, sass, scss]
+        working_directory: "./resources/assets/js"
+        is_run_task: true
