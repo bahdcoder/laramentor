@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('auth')->group(function() {
+Route::prefix('auth')->group(function () {
     Auth::routes();
 });
 

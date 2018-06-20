@@ -2,8 +2,8 @@
 
 namespace App\Http\ViewComposers;
 
-use Illuminate\View\View;
 use App\Repositories\UserRepository;
+use Illuminate\View\View;
 
 class SkillsComposer
 {
@@ -17,7 +17,8 @@ class SkillsComposer
     /**
      * Create a new profile composer.
      *
-     * @param  UserRepository  $users
+     * @param UserRepository $users
+     *
      * @return void
      */
     public function __construct(UserRepository $users)
@@ -29,7 +30,8 @@ class SkillsComposer
     /**
      * Bind data to the view.
      *
-     * @param  View  $view
+     * @param View $view
+     *
      * @return void
      */
     public function compose(View $view)

@@ -13,28 +13,28 @@ class SkillsTableSeeder extends Seeder
     public function run()
     {
         Skill::create([
-            'name' => 'laravel',
-            'color' => '#000'
+            'name'  => 'laravel',
+            'color' => '#000',
         ]);
 
         Skill::create([
-            'name' => 'vuejs',
-            'color' => '#000'
+            'name'  => 'vuejs',
+            'color' => '#000',
         ]);
 
         Skill::create([
-            'name' => 'reactjs',
-            'color' => '#000'
+            'name'  => 'reactjs',
+            'color' => '#000',
         ]);
 
         Skill::create([
-            'name' => 'eloquent',
-            'color' => '#000'
+            'name'  => 'eloquent',
+            'color' => '#000',
         ]);
 
         Skill::create([
-            'name' => 'laravel-cashier',
-            'color' => '#000'
+            'name'  => 'laravel-cashier',
+            'color' => '#000',
         ]);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use View;
-use Cache;
 use App\Skill;
+use Cache;
 use Illuminate\Support\ServiceProvider;
+use View;
 
 class AppServiceProvider extends ServiceProvider
 {
