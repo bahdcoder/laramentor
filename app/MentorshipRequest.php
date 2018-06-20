@@ -8,13 +8,14 @@ class MentorshipRequest extends Model
 {
     /**
      * Properties to protect from mass assignment.
+     *
      * @var array
      */
     protected $guarded = [];
 
     /**
-     * A request belongs to a user
-     * 
+     * A request belongs to a user.
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -23,8 +24,8 @@ class MentorshipRequest extends Model
     }
 
     /**
-     * A request belongs to many skills
-     * 
+     * A request belongs to many skills.
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function skills()
@@ -33,8 +34,8 @@ class MentorshipRequest extends Model
     }
 
     /**
-     * A request has many interests
-     * 
+     * A request has many interests.
+     *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function interests()
@@ -43,8 +44,8 @@ class MentorshipRequest extends Model
     }
 
     /**
-     * A Scope for querying only pending mentorship requests
-     * 
+     * A Scope for querying only pending mentorship requests.
+     *
      * @return Illuminate\Database\Eloquent\Builder
      */
     public function scopePending($query)
@@ -53,8 +54,8 @@ class MentorshipRequest extends Model
     }
 
     /**
-     * A Scope for querying only mentorship requests in progress
-     * 
+     * A Scope for querying only mentorship requests in progress.
+     *
      * @return Illuminate\Database\Eloquent\Builder
      */
     public function scopeProgress($query)
@@ -63,8 +64,8 @@ class MentorshipRequest extends Model
     }
 
     /**
-     * A Scope for querying only ended mentorship requests
-     * 
+     * A Scope for querying only ended mentorship requests.
+     *
      * @return Illuminate\Database\Eloquent\Builder
      */
     public function scopeEnded($query)

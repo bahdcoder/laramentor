@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\MentorshipRequest;
-use Illuminate\Http\Request;
 use App\Http\Requests\CreateMentorshipRequest;
+use Illuminate\Http\Request;
 
 class MentorshipRequestsController extends Controller
 {
@@ -31,26 +30,28 @@ class MentorshipRequestsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateMentorshipRequest $request)
     {
         $mentorshipRequest = auth()->user()->mentorshipRequests()->create($request->only([
-            'for', 'description', 'mentorship_duration', 'days', 'pairing_time', 'session_duration'
+            'for', 'description', 'mentorship_duration', 'days', 'pairing_time', 'session_duration',
         ]));
 
         session()->flash('success', 'Mentorship request created successfully.');
 
         $mentorshipRequest->skills()->attach($request->skills);
-        
+
         return $mentorshipRequest;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,7 +62,8 @@ class MentorshipRequestsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,8 +74,9 @@ class MentorshipRequestsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,7 +87,8 @@ class MentorshipRequestsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

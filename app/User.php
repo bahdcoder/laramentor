@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     /**
      * A user has many mentorship requests.
-     * 
+     *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function mentorshipRequests()
@@ -38,9 +38,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if this user has shown interest in a mentorship request
-     * 
+     * Check if this user has shown interest in a mentorship request.
+     *
      * @param MentorshipRequest $mentorshipRequest
+     *
      * @return bool
      */
     public function isInterestedIn(MentorshipRequest $mentorshipRequest)
@@ -49,8 +50,8 @@ class User extends Authenticatable
     }
 
     /**
-     * A user has many interests
-     * 
+     * A user has many interests.
+     *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function interests()
@@ -59,15 +60,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Show interest in a mentorship request
-     * 
+     * Show interest in a mentorship request.
+     *
      *  @param MentorshipRequest $mentorshipRequest
+     *
      *  @return MentorshipRequest $mentorshipRequest
      */
-    public function showInterest(MentorshipRequest $mentorshipRequest) {
+    public function showInterest(MentorshipRequest $mentorshipRequest)
+    {
         if (!$this->isInterestedIn($mentorshipRequest) && $mentorshipRequest->user_id !== $this->id) {
             return $mentorshipRequest->interests()->create([
-                'user_id' => $this->id
+                'user_id' => $this->id,
             ]);
         } else {
             return $mentorshipRequest;

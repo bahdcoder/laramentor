@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ShowMentorshipInterestTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -20,7 +20,7 @@ class ShowMentorshipInterestTest extends TestCase
         $user = factory(\App\User::class)->create();
 
         $mentorshipRequest = factory(\App\MentorshipRequest::class)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         $userInterested = factory(\App\User::class)->create();
