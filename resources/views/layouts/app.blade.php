@@ -20,11 +20,25 @@
 </head>
 <body>
     <div id="app">
+        <div class="vertical-navbar">
+            <div class="laramentor">LM</div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <i class="fas text-muted fa-list fa-2x menu-icon my-3"></i>
+                    <span class="menu-item-text">Pool</span>
+                </li>
+                <li class="menu-item active">
+                    <i class="fas text-muted fa-clock fa-2x menu-icon my-3"></i>
+                    <span class="menu-item-text">Pending</span>
+                </li>
+                <li class="menu-item">
+                    <i class="fas text-muted fa-tasks fa-2x menu-icon my-3"></i>
+                    <span class="menu-item-text">In Progress</span>
+                </li>
+            </ul>
+        </div>
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+            <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,6 +51,9 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <form class="form-inline my-2 mr-2 my-lg-0">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                        </form>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -47,6 +64,11 @@
                             </li>
                         @else
                             <vue-request-buttons></vue-request-buttons>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-bell"></i>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -72,7 +94,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
         
