@@ -1,9 +1,9 @@
 <template>
-  <table class="table">
+  <table class="table request-pool">
     <thead>
         <tr>
-            <th scope="col">For</th>
-            <th scope="col">Request</th>
+            <th scope="col">Request For</th>
+            <th scope="col">Skills</th>
             <th scope="col">Duration</th>
             <th scope="col">Pairing days</th>
             <th scope="col">Interests</th>

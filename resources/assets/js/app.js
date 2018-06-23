@@ -1,13 +1,12 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,20 +14,30 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('vue-request', require('./components/Request.vue'))
-Vue.component('vue-request-pool', require('./components/RequestPool.vue'))
-Vue.component('vue-request-buttons', require('./components/RequestButtons.vue'))
-Vue.component('vue-single-request', require('./components/SingleRequestModal.vue'))
+Vue.component("vue-request", require("./components/Request.vue"));
+Vue.component("vue-request-pool", require("./components/RequestPool.vue"));
+Vue.component(
+    "vue-request-buttons",
+    require("./components/RequestButtons.vue")
+);
+Vue.component(
+    "vue-single-request",
+    require("./components/SingleRequestModal.vue")
+);
+Vue.component(
+    'vue-request-filters',
+    require("./components/RequestFilters.vue")
+)
 
 jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
-  icons: {
-    up: 'fas fa-arrow-up',
-    down: 'fas fa-arrow-down',
-  }
-})
+    icons: {
+        up: "fas fa-arrow-up",
+        down: "fas fa-arrow-down"
+    }
+});
 
-Vue.use(require('vuejs-noty').default)
+Vue.use(require("vuejs-noty").default);
 
 const app = new Vue({
-    el: '#app'
-})
+    el: "#app"
+});
