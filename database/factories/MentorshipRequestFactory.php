@@ -1,8 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\MentorshipRequest;
 
-$factory->define(\App\MentorshipRequest::class, function (Faker $faker) {
+$factory->define(MentorshipRequest::class, function (Faker $faker) {
     $for = ['mentor', 'mentee'];
 
     return [
@@ -15,5 +16,23 @@ $factory->define(\App\MentorshipRequest::class, function (Faker $faker) {
         'user_id'             => function () {
             return factory(\App\User::class)->create()->id;
         },
+    ];
+});
+
+$factory->state(MentorshipRequest::class, 'pending', function () {
+    return [
+        'status' => 'pending'
+    ];
+});
+
+$factory->state(MentorshipRequest::class, 'progress', function () {
+    return [
+        'status' => 'progress'
+    ];
+});
+
+$factory->state(MentorshipRequest::class, 'ended', function () {
+    return [
+        'status' => 'ended'
     ];
 });
