@@ -9,6 +9,7 @@
 [![Build Status](https://travis-ci.org/bahdcoder/laramentor.svg?branch=master)](https://travis-ci.org/bahdcoder/laramentor)
 [![StyleCI](https://github.styleci.io/repos/138019410/shield?branch=master)](https://github.styleci.io/repos/138019410)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6afc2491eb59444f2322/maintainability)](https://codeclimate.com/github/bahdcoder/laramentor/maintainability)
+[![codecov](https://codecov.io/gh/bahdcoder/laramentor/branch/master/graph/badge.svg)](https://codecov.io/gh/bahdcoder/laramentor)
 
 ## The problem
 

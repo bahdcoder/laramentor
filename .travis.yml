@@ -14,5 +14,8 @@ before_script:
   - npm install
 
 script:
-  - vendor/bin/phpunit
+  - composer run-script coverage
   - npm test
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
