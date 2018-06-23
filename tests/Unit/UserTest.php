@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\User;
-use Tests\TestCase;
 use App\MentorshipRequest;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
@@ -22,12 +21,12 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $request = $user->mentorshipRequests()->create([
-            'for' => 'mentor',
-            'description' => 'desc',
-            'pairing_time' => '20:00',
-            'days' => 49,
-            'session_duration' => 20,
-            'mentorship_duration' => 20
+            'for'                 => 'mentor',
+            'description'         => 'desc',
+            'pairing_time'        => '20:00',
+            'days'                => 49,
+            'session_duration'    => 20,
+            'mentorship_duration' => 20,
         ]);
 
         $this->assertEquals($user->mentorshipRequests->count(), 1);
@@ -43,7 +42,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $user->interests()->create([
-            'mentorship_request_id' => 1
+            'mentorship_request_id' => 1,
         ]);
 
         $this->assertEquals($user->interests->count(), 1);
@@ -83,7 +82,6 @@ class UserTest extends TestCase
         $user->showInterest($request);
         $user->showInterest($request);
 
-
         $this->assertEquals($request->interests->count(), 1);
     }
 
@@ -97,7 +95,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $request = factory(MentorshipRequest::class)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         $user->showInterest($request);

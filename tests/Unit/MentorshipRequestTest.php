@@ -2,17 +2,17 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\MentorshipRequest;
-use  Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use  Tests\TestCase;
 
 class MentorshipRequestTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * A mentorship request belongs to a user
+     * A mentorship request belongs to a user.
      *
      * @return void
      */
@@ -28,7 +28,7 @@ class MentorshipRequestTest extends TestCase
     }
 
     /**
-     * A mentorship request belongs to many skills
+     * A mentorship request belongs to many skills.
      *
      * @return void
      */
@@ -93,7 +93,7 @@ class MentorshipRequestTest extends TestCase
         $mentorshipRequest = factory(MentorshipRequest::class)->create();
 
         $mentorshipRequest->interests()->create([
-            'user_id' => 1
+            'user_id' => 1,
         ]);
 
         $this->assertEquals($mentorshipRequest->count(), 1);

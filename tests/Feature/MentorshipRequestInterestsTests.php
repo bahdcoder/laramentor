@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class MentorshipRequestInterestsTests extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A user can show interest in a request.
      *
