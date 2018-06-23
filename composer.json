@@ -48,7 +48,8 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
-        ]
+        ],
+        "coverage": "phpdbg -qrr ./vendor/bin/phpunit"
     },
     "config": {
         "preferred-install": "dist",
