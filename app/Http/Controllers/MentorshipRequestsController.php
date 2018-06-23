@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMentorshipRequest;
 use Illuminate\Http\Request;
+use App\MentorshipRequest;
 
 class MentorshipRequestsController extends Controller
 {
@@ -14,7 +15,7 @@ class MentorshipRequestsController extends Controller
      */
     public function index()
     {
-        //
+        return MentorshipRequest::pending()->with('skills', 'interests', 'user')->get();
     }
 
     /**

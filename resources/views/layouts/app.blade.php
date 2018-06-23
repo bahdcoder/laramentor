@@ -12,6 +12,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+       @auth
+         window.authId = "{{ auth()->user()->id }}"
+       @endauth
+    </script>
 
     <!-- Fonts -->
 
@@ -20,23 +25,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="vertical-navbar">
-            <div class="laramentor">LM</div>
-            <ul class="menu">
-                <li class="menu-item">
-                    <i class="fas text-muted fa-list fa-2x menu-icon my-3"></i>
-                    <span class="menu-item-text">Pool</span>
-                </li>
-                <li class="menu-item active">
-                    <i class="fas text-muted fa-clock fa-2x menu-icon my-3"></i>
-                    <span class="menu-item-text">Pending</span>
-                </li>
-                <li class="menu-item">
-                    <i class="fas text-muted fa-tasks fa-2x menu-icon my-3"></i>
-                    <span class="menu-item-text">In Progress</span>
-                </li>
-            </ul>
-        </div>
+        <vertical-navbar></vertical-navbar>
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

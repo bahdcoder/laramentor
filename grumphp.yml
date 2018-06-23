@@ -2,7 +2,9 @@ parameters:
     git_dir: .
     bin_dir: vendor/bin
     tasks:
-      phpunit:
+      composer_script:
+        script: coverage
+        triggered_by: [php]
       npm_script:
         script: test
         triggered_by: [js, vue, sass, scss]

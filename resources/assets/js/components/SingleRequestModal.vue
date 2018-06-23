@@ -57,9 +57,9 @@ export default {
   computed: {
     canShowInterest() {
       return (
-        this.request.user_id !== this.auth_id &&
+        this.request.user_id !== Number(this.auth_id) &&
         this.request.interests.findIndex(
-          interest => interest.user_id === this.auth_id
+          interest => interest.user_id === Number(this.auth_id)
         ) === -1
       );
     }

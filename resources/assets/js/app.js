@@ -1,33 +1,37 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import "./bootstrap";
 
-require("./bootstrap");
+import Vue from "vue";
+import VueRouter from "vue-router";
+import VueNoty from "vuejs-noty";
 
-window.Vue = require("vue");
+Vue.use(VueNoty);
+Vue.use(VueRouter);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import RequestPool from "./components/RequestPool.vue";
+import Request from "./components/Request.vue";
+import Layout from "./components/Layout";
+import NotFound from "./components/404.vue";
+import RequestButtons from "./components/RequestButtons.vue";
+import SingleRequest from "./components/SingleRequestModal.vue";
+import RequestFilters from "./components/RequestFilters.vue";
+import VerticalNavbar from "./components/VerticalNavbar.vue";
 
-Vue.component("vue-request", require("./components/Request.vue"));
-Vue.component("vue-request-pool", require("./components/RequestPool.vue"));
-Vue.component(
-    "vue-request-buttons",
-    require("./components/RequestButtons.vue")
-);
-Vue.component(
-    "vue-single-request",
-    require("./components/SingleRequestModal.vue")
-);
-Vue.component(
-    'vue-request-filters',
-    require("./components/RequestFilters.vue")
-)
+const routes = [
+    {
+        path: "/request-pool",
+        component: RequestPool
+    },
+    {
+        path: "*",
+        component: NotFound
+    }
+];
+
+Vue.component("vue-request", Request);
+Vue.component("vertical-navbar", VerticalNavbar);
+Vue.component("vue-request-buttons", RequestButtons);
+Vue.component("vue-single-request", SingleRequest);
+Vue.component("vue-request-filters", RequestFilters);
 
 jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
     icons: {
@@ -36,8 +40,14 @@ jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
     }
 });
 
-Vue.use(require("vuejs-noty").default);
-
 const app = new Vue({
-    el: "#app"
+    el: "#app",
+    components: {
+        Layout
+    },
+    router: new VueRouter({
+        routes,
+        mode: "history",
+        linkActiveClass: 'active'
+    })
 });
