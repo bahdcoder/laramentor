@@ -3,15 +3,15 @@
 namespace Tests\Feature;
 
 use Cache;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ViewSharesTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
-     * All skills are cached and shared with all views
+     * All skills are cached and shared with all views.
      *
      * @return void
      */

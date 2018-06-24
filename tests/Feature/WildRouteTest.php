@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class WildRouteTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A request to an unknown route renders the home view.
      *

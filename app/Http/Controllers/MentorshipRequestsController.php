@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMentorshipRequest;
-use Illuminate\Http\Request;
 use App\MentorshipRequest;
+use Illuminate\Http\Request;
 
 class MentorshipRequestsController extends Controller
 {
