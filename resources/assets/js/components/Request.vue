@@ -91,7 +91,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" :disabled="loading" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" @click="requestMentor()" :disabled="!isValidRequest" class="btn btn-primary">
+                <button type="button" @click="requestMentor()" :disabled="!isValidRequest || loading" class="btn btn-primary">
                     <i class="fas fa-spinner fa-spin" v-if="loading"></i>
                     <span v-else>Request {{ type }}</span>
                 </button>
@@ -102,101 +102,136 @@
 </template>
 
 <script>
-import vSelect from 'vue-select'
-import TimePicker from 'vue-bootstrap-datetimepicker'
+import vSelect from "vue-select";
+import TimePicker from "vue-bootstrap-datetimepicker";
 
-import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css'
+import "pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css";
 
-import EventBus from '../event-bus'
-import { SET_REQUEST_TYPE } from '../events'
+import EventBus from "../event-bus";
+import { SET_REQUEST_TYPE } from "../events";
 
 const weekDays = {
-    1: 'Mondays',
-    2: 'Tuesdays',
-    3: 'Wednesdays',
-    4: 'Thursdays',
-    5: 'Fridays',
-    6: 'Saturdays',
-    7: 'Sundays'
-}
+  1: "Mondays",
+  2: "Tuesdays",
+  3: "Wednesdays",
+  4: "Thursdays",
+  5: "Fridays",
+  6: "Saturdays",
+  7: "Sundays"
+};
 
 export default {
-    data() {
-        return {
-            type: '',
-            selectedSkills: [],
-            description: '',
-            duration: null,
-            days: [],
-            description: '',
-            pairing_time: new Date,
-            pairing_time_options: {
-                format: 'HH:mm',
-                useCurrent: false,
-            },
-            session_duration: 30,
-            loading: false
+  data() {
+    return {
+      type: "",
+      selectedSkills: [],
+      description: "",
+      duration: null,
+      days: [],
+      description: "",
+      pairing_time: new Date(),
+      pairing_time_options: {
+        format: "HH:mm",
+        useCurrent: false
+      },
+      session_duration: 30,
+      loading: false
+    };
+  },
+  components: {
+    "v-select": vSelect,
+    "v-time-picker": TimePicker
+  },
+  props: ["skills"],
+  mounted() {
+    EventBus.$on(SET_REQUEST_TYPE, type => {
+      this.type = type;
+      $("#request").modal();
+    });
+  },
+  computed: {
+    isValidRequest() {
+      const descriptionIsValid = () =>
+        this.description && this.description.length > 10;
+      const typeIsValid = () =>
+        this.type === "Mentor" || this.type === "Mentee";
+      const durationIsValid = () =>
+        this.duration &&
+        typeof Number(this.duration) === "number" &&
+        Number(this.duration) < 12;
+      const daysIsValid = () => this.days.length > 0;
+      const skillsIsValid = () => this.selectedSkills.length > 0;
+
+      return (
+        descriptionIsValid() &&
+        typeIsValid() &&
+        durationIsValid() &&
+        daysIsValid() &&
+        skillsIsValid() &&
+        this.pairingTimeIsValid()
+      );
+    },
+    summaryMessage() {
+      const occurence = this.days.sort().map(day => weekDays[day]);
+
+      let occurenceString = "";
+
+      occurence.forEach((day, index) => {
+        if (index === 0) {
+          occurenceString += day;
+        } else if (index > 0 && index < occurence.length - 1) {
+          occurenceString += `, ${day}`;
+        } else {
+          occurenceString += ` and ${day}.`;
         }
-    },
-    components: {
-        'v-select': vSelect,
-        'v-time-picker': TimePicker
-    },
-    props: ['skills'],
-    mounted() {
-        EventBus.$on(SET_REQUEST_TYPE, (type) => {
-            this.type = type
-            $('#request').modal()
-        })
-    },
-    computed: {
-        isValidRequest() {
-            const descriptionIsValid = () => this.description && this.description.length > 10
-            const typeIsValid = () => (this.type === 'Mentor' || this.type === 'Mentee')
-            const durationIsValid = () => (this.duration && typeof Number(this.duration) === 'number' && Number(this.duration) < 12)
-            const daysIsValid = () => (this.days.length > 0)
-            const skillsIsValid = () => (this.selectedSkills.length > 0)
+      });
 
-            return descriptionIsValid() && typeIsValid() && durationIsValid() && daysIsValid() && skillsIsValid() && this.pairingTimeIsValid()
-        },
-        summaryMessage() {
-            const occurence = this.days.sort().map(day => weekDays[day])
+      const message = `This mentorship will last for ${
+        this.duration
+      } weeks. Mentorship sessions will hold on ${occurenceString} at ${
+        this.pairing_time
+      }.`;
 
-            let occurenceString = ''
-
-            occurence.forEach((day, index) => {
-                if (index === 0) {
-                    occurenceString += day
-                } else if (index > 0 && index < (occurence.length - 1)) {
-                    occurenceString += `, ${day}`
-                } else {
-                    occurenceString += ` and ${day}.`
-                }
-            })
-
-            const message = `This mentorship will last for ${this.duration} weeks. Mentorship sessions will hold on ${occurenceString} at ${this.pairing_time}.`
-
-            return message
-        }
-    },
-    methods: {
-        pairingTimeIsValid() {
-            return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(this.pairing_time)
-        },
-        requestMentor() {
-            this.loading = true
-            axios.post('/requests', {
-                for: this.type.toLowerCase(),
-                description: this.description,
-                mentorship_duration: this.duration * 7, // database stores mentorship duration as number of days.
-                pairing_time: this.pairing_time,
-                skills: this.skills.map(skill => skill.id),
-                session_duration: this.session_duration,
-                days: this.days.join('')
-            }).then(response => {
-                window.location.pathname = '/home'
-            })
-        }
+      return message;
     }
-}
+  },
+  methods: {
+    pairingTimeIsValid() {
+      return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(this.pairing_time);
+    },
+    requestMentor() {
+      this.loading = true;
+      axios
+        .post("/requests", {
+          for: this.type.toLowerCase(),
+          description: this.description,
+          mentorship_duration: this.duration * 7, // database stores mentorship duration as number of days.
+          pairing_time: this.pairing_time,
+          skills: this.skills.map(skill => skill.id),
+          session_duration: this.session_duration,
+          days: this.days.join("")
+        })
+        .then(response => {
+          this.$noty.success("Successfully published mentorship request.");
+
+          this.resetData();
+          $("#request").modal("hide");
+        });
+    },
+    resetData() {
+        this.type = '';
+        this.selectedSkills = [];
+        this.description = '';
+        this.duration = null;
+        this.days = [];
+        this.pairing_time = new Date();
+        this.pairing_time_options = {
+            format: "HH:mm",
+            useCurrent: false
+        };
+        session_duration: 30;
+        loading: false
+    }
+  }
+};
 </script>

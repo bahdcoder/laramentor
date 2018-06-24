@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "vue-bootstrap-datetimepicker": "^5.0.0-beta.2",
+        "vue-router": "^3.0.1",
         "vue-select": "^2.4.0",
         "vue2-timepicker": "^0.1.4",
         "vuejs-noty": "^0.1.3",
